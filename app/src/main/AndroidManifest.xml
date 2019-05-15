@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".RateListActivity" />
         <activity android:name=".ConfigActivity" />
-        <activity android:name=".RateActivity">
+        <activity android:name=".RateActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
