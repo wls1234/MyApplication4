@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="hello">Hello Kitty</string>
+    <string name="rmb_hint" translatable="false">input rmb</string>
 </resources>
