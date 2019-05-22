@@ -33,6 +33,6 @@ public class RateCalcActivity extends AppCompatActivity implements View.OnClickL
         float r=Float.parseFloat(str);
         float val=r/rate*100;
         Log.i(TAG, "onClick: "+val);
-        show2.setText(""+val);
+        show2.setText(val + "");
     }
 }

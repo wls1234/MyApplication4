@@ -1,6 +1,8 @@
 package com.example.asus.myapplication;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class MyList2Activity extends ListActivity implements Runnable, AdapterView.OnItemLongClickListener {
     Handler handler;
-    private ArrayList<HashMap<String, String>> listItems;//存放文字图片信息
+    private List<HashMap<String, String>> listItems;//存放文字图片信息
     private SimpleAdapter listItemApdater;//适配器
     public final String TAG = "MyList2";
 
@@ -39,8 +41,8 @@ public class MyList2Activity extends ListActivity implements Runnable, AdapterVi
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 7) {
-                    List<HashMap<String, String>> list2 = (List<HashMap<String, String>>) msg.obj;
-                    listItemApdater = new SimpleAdapter(MyList2Activity.this, list2,
+                    listItems = (List<HashMap<String, String>>) msg.obj;
+                    listItemApdater = new SimpleAdapter(MyList2Activity.this, listItems,
                             R.layout.list_item//listitems的xml布局实现
                             , new String[]{"ItemTitle", "ItemDetail"},
                             new int[]{R.id.itemTitle, R.id.itemDetail}
@@ -127,10 +129,22 @@ public class MyList2Activity extends ListActivity implements Runnable, AdapterVi
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         Log.i(TAG, "onItemLongClick: 长按列表项position:"+position);
         //删除操作
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示").setMessage("确认是否删除").setPositiveButton("是", new DialogInterface.OnClickListener() {
 
-        return false;
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i(TAG, "onClick:对话框事件处理");
+                listItems.remove(position);
+                listItemApdater.notifyDataSetChanged();
+            }
+        }).
+                setNegativeButton("否", null);
+        builder.create().show();
+
+        return true;
     }
 }
